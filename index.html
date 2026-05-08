@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solicitud de Cuenta Bancaria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="28" height="28" rx="8" fill="#1A3A6B" />
+            <path d="M6 20V12L14 7L22 12V20H17V15H11V20H6Z" fill="white" />
+          </svg>
+        </span>
+        <span class="brand-name">Banco G&N</span>
+      </div>
+      <nav class="header-nav" aria-label="Navegación secundaria">
+        <a href="#" class="nav-link">Ayuda</a>
+        <a href="#" class="nav-link">Sucursales</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content" role="main">
+    <div class="page-wrapper">
+
+      <!-- Título de la página -->
+      <div class="page-title-block">
+        <h1 class="page-title">Solicitud de Cuenta Bancaria</h1>
+        <p class="page-subtitle">Completa el formulario para abrir tu cuenta sin costo.</p>
+      </div>
+
+      <!-- Contenedor principal: stepper + formulario -->
+      <div class="form-layout">
+
+        <!-- Indicador de progreso vertical -->
+        <aside class="stepper-sidebar" aria-label="Progreso del formulario">
+          <ol class="stepper-list" role="list">
+            <li class="stepper-item active" data-step="1" id="step-indicator-1">
+              <div class="stepper-marker" aria-hidden="true">
+                <span class="stepper-number">1</span>
+                <svg class="stepper-check" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true">
+                  <path d="M3 8L6.5 11.5L13 4.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="stepper-label-group">
+                <span class="stepper-step-tag">Paso 1</span>
+                <span class="stepper-label">Ingresa tu RUT y número de serie cédula</span>
+              </div>
+              <div class="stepper-connector" aria-hidden="true"></div>
+            </li>
+            <li class="stepper-item" data-step="2" id="step-indicator-2">
+              <div class="stepper-marker" aria-hidden="true">
+                <span class="stepper-number">2</span>
+                <svg class="stepper-check" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true">
+                  <path d="M3 8L6.5 11.5L13 4.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="stepper-label-group">
+                <span class="stepper-step-tag">Paso 2</span>
+                <span class="stepper-label">Ingresa tus datos personales</span>
+              </div>
+              <div class="stepper-connector" aria-hidden="true"></div>
+            </li>
+            <li class="stepper-item" data-step="3" id="step-indicator-3">
+              <div class="stepper-marker" aria-hidden="true">
+                <span class="stepper-number">3</span>
+                <svg class="stepper-check" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true">
+                  <path d="M3 8L6.5 11.5L13 4.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="stepper-label-group">
+                <span class="stepper-step-tag">Paso 3</span>
+                <span class="stepper-label">Ingresa tu dirección</span>
+              </div>
+              <div class="stepper-connector" aria-hidden="true"></div>
+            </li>
+            <li class="stepper-item" data-step="4" id="step-indicator-4">
+              <div class="stepper-marker" aria-hidden="true">
+                <span class="stepper-number">4</span>
+                <svg class="stepper-check" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true">
+                  <path d="M3 8L6.5 11.5L13 4.5" stroke="white" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="stepper-label-group">
+                <span class="stepper-step-tag">Paso 4</span>
+                <span class="stepper-label">Ingresa tus datos de contacto</span>
+              </div>
+            </li>
+          </ol>
+        </aside>
+
+        <!-- Área del formulario -->
+        <section class="form-area" aria-live="polite" aria-atomic="true">
+
+          <!-- PASO 1 -->
+          <div class="form-step" id="step-1" role="group" aria-labelledby="step1-heading">
+            <div class="step-header">
+              <span class="step-badge" aria-hidden="true">1</span>
+              <h2 class="step-heading" id="step1-heading">Ingresa tu RUT y número de serie cédula</h2>
+            </div>
+            <div class="form-card">
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="field-label" for="rut">Ingresa tu RUT <span class="required-mark"
+                      aria-label="obligatorio">*</span></label>
+                  <input class="field-input" type="text" id="rut" name="rut" placeholder="Ej: 12.345.678-9"
+                    autocomplete="off" aria-required="true" aria-describedby="rut-error" />
+                  <span class="field-error" id="rut-error" role="alert" aria-live="assertive"></span>
+                </div>
+                <div class="form-field">
+                  <label class="field-label" for="serie">
+                    N° documento o serie
+                    <button type="button" class="tooltip-trigger" aria-label="¿Qué es el número de serie?"
+                      data-tooltip="Número ubicado en el reverso de tu cédula de identidad.">
+                      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5" />
+                        <path d="M10 9V14M10 6.5V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                      </svg>
+                    </button>
+                    <span class="required-mark" aria-label="obligatorio">*</span>
+                  </label>
+                  <div class="tooltip-box" id="serie-tooltip" role="tooltip">Número ubicado en el reverso de tu cédula
+                    de identidad.</div>
+                  <input class="field-input" type="text" id="serie" name="serie"
+                    placeholder="Ingresa N° de serie o documento" autocomplete="off" aria-required="true"
+                    aria-describedby="serie-error" />
+                  <span class="field-error" id="serie-error" role="alert" aria-live="assertive"></span>
+                </div>
+              </div>
+            </div>
+            <div class="step-actions">
+              <button type="button" class="btn btn-secondary btn-back" disabled
+                aria-label="Volver al paso anterior">Volver</button>
+              <button type="button" class="btn btn-primary btn-next" data-step="1"
+                aria-label="Continuar al paso 2">Continuar</button>
+            </div>
+          </div>
+
+          <!-- PASO 2 -->
+          <div class="form-step hidden" id="step-2" role="group" aria-labelledby="step2-heading">
+            <div class="step-header">
+              <span class="step-badge" aria-hidden="true">2</span>
+              <h2 class="step-heading" id="step2-heading">Ingresa tus datos personales</h2>
+            </div>
+            <div class="form-card">
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="field-label" for="nombres">Nombres <span class="required-mark"
+                      aria-label="obligatorio">*</span></label>
+                  <input class="field-input" type="text" id="nombres" name="nombres" placeholder="Ingresa tus nombres"
+                    autocomplete="given-name" aria-required="true" aria-describedby="nombres-error" />
+                  <span class="field-error" id="nombres-error" role="alert" aria-live="assertive"></span>
+                </div>
+                <div class="form-field">
+                  <label class="field-label" for="apellidos">Apellidos <span class="required-mark"
+                      aria-label="obligatorio">*</span></label>
+                  <input class="field-input" type="text" id="apellidos" name="apellidos"
+                    placeholder="Ingresa tus apellidos" autocomplete="family-name" aria-required="true"
+                    aria-describedby="apellidos-error" />
+                  <span class="field-error" id="apellidos-error" role="alert" aria-live="assertive"></span>
+                </div>
+              </div>
+              <div class="form-row form-row--half">
+                <div class="form-field">
+                  <label class="field-label" for="fecha_nacimiento">Fecha de nacimiento <span class="required-mark"
+                      aria-label="obligatorio">*</span></label>
+                  <input class="field-input" type="date" id="fecha_nacimiento" name="fecha_nacimiento"
+                    autocomplete="bday" aria-required="true" aria-describedby="fecha_nacimiento-error" />
+                  <span class="field-error" id="fecha_nacimiento-error" role="alert" aria-live="assertive"></span>
+                </div>
+              </div>
+            </div>
+            <div class="step-actions">
+              <button type="button" class="btn btn-secondary btn-back" data-step="2"
+                aria-label="Volver al paso 1">Volver</button>
+              <button type="button" class="btn btn-primary btn-next" data-step="2"
+                aria-label="Continuar al paso 3">Continuar</button>
+            </div>
+          </div>
+
+          <!-- PASO 3 -->
+          <div class="form-step hidden" id="step-3" role="group" aria-labelledby="step3-heading">
+            <div class="step-header">
+              <span class="step-badge" aria-hidden="true">3</span>
+              <h2 class="step-heading" id="step3-heading">Ingresa tu dirección</h2>
+            </div>
+            <div class="form-card">
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="field-label" for="region">Región <span class="required-mark"
+                      aria-label="obligatorio">*</span></label>
+                  <div class="select-wrapper">
+                    <select class="field-input field-select" id="region" name="region" aria-required="true"
+                      aria-describedby="region-error">
+                      <option value="">Selecciona tu región</option>
+                      <option value="rm">Región Metropolitana</option>
+                      <option value="v">Región de Valparaíso</option>
+                      <option value="viii">Región del Biobío</option>
+                      <option value="ix">Región de La Araucanía</option>
+                      <option value="iv">Región de Coquimbo</option>
+                      <option value="vi">Región del Libertador B. O'Higgins</option>
+                      <option value="vii">Región del Maule</option>
+                      <option value="x">Región de Los Lagos</option>
+                      <option value="xi">Región de Aysén</option>
+                      <option value="xii">Región de Magallanes</option>
+                      <option value="i">Región de Tarapacá</option>
+                      <option value="ii">Región de Antofagasta</option>
+                      <option value="iii">Región de Atacama</option>
+                      <option value="xiv">Región de Los Ríos</option>
+                      <option value="xv">Región de Arica y Parinacota</option>
+                      <option value="xvi">Región de Ñuble</option>
+                    </select>
+                    <svg class="select-arrow" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true">
+                      <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </div>
+                  <span class="field-error" id="region-error" role="alert" aria-live="assertive"></span>
+                </div>
+                <div class="form-field">
+                  <label class="field-label" for="comuna">Comuna <span class="required-mark"
+                      aria-label="obligatorio">*</span></label>
+                  <input class="field-input" type="text" id="comuna" name="comuna" placeholder="Ingresa tu comuna"
+                    aria-required="true" aria-describedby="comuna-error" />
+                  <span class="field-error" id="comuna-error" role="alert" aria-live="assertive"></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-field form-field--grow">
+                  <label class="field-label" for="calle">Calle <span class="required-mark"
+                      aria-label="obligatorio">*</span></label>
+                  <input class="field-input" type="text" id="calle" name="calle" placeholder="Nombre de la calle"
+                    autocomplete="street-address" aria-required="true" aria-describedby="calle-error" />
+                  <span class="field-error" id="calle-error" role="alert" aria-live="assertive"></span>
+                </div>
+                <div class="form-field form-field--shrink">
+                  <label class="field-label" for="numero">Número <span class="required-mark"
+                      aria-label="obligatorio">*</span></label>
+                  <input class="field-input" type="text" id="numero" name="numero" placeholder="N°" aria-required="true"
+                    aria-describedby="numero-error" />
+                  <span class="field-error" id="numero-error" role="alert" aria-live="assertive"></span>
+                </div>
+              </div>
+            </div>
+            <div class="step-actions">
+              <button type="button" class="btn btn-secondary btn-back" data-step="3"
+                aria-label="Volver al paso 2">Volver</button>
+              <button type="button" class="btn btn-primary btn-next" data-step="3"
+                aria-label="Continuar al paso 4">Continuar</button>
+            </div>
+          </div>
+
+          <!-- PASO 4 -->
+          <div class="form-step hidden" id="step-4" role="group" aria-labelledby="step4-heading">
+            <div class="step-header">
+              <span class="step-badge" aria-hidden="true">4</span>
+              <h2 class="step-heading" id="step4-heading">Ingresa tus datos de contacto</h2>
+            </div>
+            <div class="form-card">
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="field-label" for="email">Correo electrónico <span class="required-mark"
+                      aria-label="obligatorio">*</span></label>
+                  <input class="field-input" type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com"
+                    autocomplete="email" aria-required="true" aria-describedby="email-error" />
+                  <span class="field-error" id="email-error" role="alert" aria-live="assertive"></span>
+                </div>
+                <div class="form-field">
+                  <label class="field-label" for="telefono">Teléfono celular <span class="required-mark"
+                      aria-label="obligatorio">*</span></label>
+                  <div class="phone-wrapper">
+                    <span class="phone-prefix" aria-hidden="true">+56</span>
+                    <input class="field-input field-input--phone" type="tel" id="telefono" name="telefono"
+                      placeholder="9 XXXX XXXX" autocomplete="tel" maxlength="9" aria-required="true"
+                      aria-describedby="telefono-error" />
+                  </div>
+                  <span class="field-error" id="telefono-error" role="alert" aria-live="assertive"></span>
+                </div>
+              </div>
+            </div>
+            <div class="step-actions">
+              <button type="button" class="btn btn-secondary btn-back" data-step="4"
+                aria-label="Volver al paso 3">Volver</button>
+              <button type="button" class="btn btn-primary btn-submit" aria-label="Enviar solicitud">Enviar
+                solicitud</button>
+            </div>
+          </div>
+
+          <!-- ESTADO ÉXITO -->
+          <div class="form-step hidden success-screen" id="step-success" role="status" aria-live="polite">
+            <div class="success-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="30" stroke="#1A3A6B" stroke-width="2.5" />
+                <path d="M18 32L27 41L46 22" stroke="#1A3A6B" stroke-width="2.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <h2 class="success-title">¡Solicitud enviada correctamente!</h2>
+            <p class="success-message">Hemos recibido tus datos. En las próximas horas recibirás un correo de
+              confirmación con los pasos a seguir para activar tu Cuenta Bancaria.</p>
+            <button type="button" class="btn btn-primary" id="restart-btn">Volver al inicio</button>
+          </div>
+
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p class="footer-text">&copy; 2026 Banco G&N. Todos los derechos reservados.</p>
+      <nav class="footer-nav" aria-label="Navegación del pie de página">
+        <a href="#" class="footer-link">Términos y condiciones</a>
+        <a href="#" class="footer-link">Política de privacidad</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
