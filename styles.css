@@ -35,6 +35,11 @@
   --shadow-focus: 0 0 0 3px rgba(26, 58, 107, 0.18);
   --shadow-btn: 0 4px 14px rgba(26, 58, 107, 0.28);
 
+  --shadow-float: 0 18px 48px rgba(26, 58, 107, 0.16), 0 6px 18px rgba(0, 0, 0, 0.07);
+  --shadow-float-btn: 0 10px 28px rgba(26, 58, 107, 0.38);
+  --shadow-float-input: 0 6px 20px rgba(26, 58, 107, 0.12);
+  --transition-spring: 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
   --font-body: 'DM Sans', sans-serif;
   --font-display: 'DM Serif Display', serif;
 
@@ -64,6 +69,19 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* ============================================
+   REQ 6: ANTIGRAVITY CANVAS (background)
+   ============================================ */
+#antigravity-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* ============================================
@@ -124,11 +142,15 @@ body {
 .main-content {
   flex: 1;
   padding: 40px 24px 60px;
+  position: relative;
+  z-index: 1;
 }
 
 .page-wrapper {
   max-width: 1100px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 /* Page title */
@@ -170,6 +192,12 @@ body {
   box-shadow: var(--shadow-card);
   position: sticky;
   top: 84px;
+  transition: transform var(--transition-spring), box-shadow var(--transition-spring);
+}
+
+.stepper-sidebar:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-float);
 }
 
 .stepper-list {
@@ -307,7 +335,7 @@ body {
    FORM STEP
    ============================================ */
 .form-step {
-  animation: fadeSlideIn var(--transition-slow) ease forwards;
+  animation: fadeSlideIn var(--transition-spring) forwards;
 }
 
 .form-step.hidden {
@@ -317,7 +345,7 @@ body {
 @keyframes fadeSlideIn {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(28px);
   }
 
   to {
@@ -367,6 +395,13 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  transition: transform var(--transition-spring), box-shadow var(--transition-spring);
+  will-change: transform;
+}
+
+.form-card:hover {
+  transform: translateY(-7px);
+  box-shadow: var(--shadow-float);
 }
 
 .form-row {
@@ -412,7 +447,12 @@ body {
   line-height: 1;
 }
 
-/* Input */
+.field-hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
 .field-input {
   width: 100%;
   height: 48px;
@@ -425,7 +465,8 @@ body {
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md);
   outline: none;
-  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+  transition: border-color var(--transition), box-shadow var(--transition-spring),
+    background var(--transition), transform var(--transition-spring);
   -webkit-appearance: none;
   appearance: none;
 }
@@ -440,8 +481,9 @@ body {
 
 .field-input:focus {
   border-color: var(--color-border-focus);
-  box-shadow: var(--shadow-focus);
+  box-shadow: var(--shadow-focus), var(--shadow-float-input);
   background: var(--color-surface);
+  transform: translateY(-2px);
 }
 
 .field-input.error {
@@ -451,6 +493,12 @@ body {
 
 .field-input.error:focus {
   box-shadow: 0 0 0 3px rgba(201, 53, 31, 0.15);
+  transform: translateY(0);
+}
+
+.field-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Error message */
@@ -484,6 +532,11 @@ body {
   padding-right: 40px;
 }
 
+.field-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .select-arrow {
   position: absolute;
   right: 12px;
@@ -504,18 +557,21 @@ body {
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: border-color var(--transition), box-shadow var(--transition);
+  transition: border-color var(--transition), box-shadow var(--transition-spring),
+    transform var(--transition-spring), background var(--transition);
 }
 
 .phone-wrapper:focus-within {
   border-color: var(--color-border-focus);
-  box-shadow: var(--shadow-focus);
+  box-shadow: var(--shadow-focus), var(--shadow-float-input);
   background: var(--color-surface);
+  transform: translateY(-2px);
 }
 
 .phone-wrapper.error {
   border-color: var(--color-error);
   background: var(--color-error-bg);
+  transform: translateY(0);
 }
 
 .phone-prefix {
@@ -540,11 +596,14 @@ body {
   padding-left: 12px;
   height: 46px;
   flex: 1;
+  transform: none;
+  transition: none;
 }
 
 .field-input--phone:focus {
   border: none;
   box-shadow: none;
+  transform: none;
 }
 
 /* ============================================
@@ -624,10 +683,13 @@ body {
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  transition: background var(--transition), color var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  transition: background var(--transition), color var(--transition),
+    border-color var(--transition), box-shadow var(--transition-spring),
+    transform var(--transition-spring);
   border: 2px solid transparent;
   user-select: none;
   white-space: nowrap;
+  will-change: transform;
 }
 
 .btn:focus-visible {
@@ -646,13 +708,13 @@ body {
 .btn-primary:hover:not(:disabled) {
   background: var(--color-primary-dark);
   border-color: var(--color-primary-dark);
-  box-shadow: var(--shadow-btn);
-  transform: translateY(-1px);
+  box-shadow: var(--shadow-float-btn);
+  transform: translateY(-4px);
 }
 
 .btn-primary:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: none;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-btn);
 }
 
 /* Secondary */
@@ -665,11 +727,55 @@ body {
 
 .btn-secondary:hover:not(:disabled) {
   background: rgba(var(--color-primary-rgb), 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.12);
+}
+
+.btn-secondary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .btn-secondary:disabled {
   opacity: 0;
   pointer-events: none;
+}
+
+/* Danger / Ghost */
+.btn-danger {
+  background: transparent;
+  color: var(--color-error);
+  border-color: var(--color-error);
+  min-width: 120px;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--color-error-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(201, 53, 31, 0.15);
+}
+
+/* Edit inline button */
+.btn-edit {
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), transform var(--transition-spring);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.btn-edit:hover {
+  background: rgba(var(--color-primary-rgb), 0.07);
+  transform: translateY(-1px);
 }
 
 /* ============================================
@@ -694,11 +800,25 @@ body {
 .success-icon {
   width: 80px;
   height: 80px;
+  animation: floatPulse 3s ease-in-out infinite;
 }
 
 .success-icon svg {
   width: 80px;
   height: 80px;
+}
+
+@keyframes floatPulse {
+  0%,
+  100% {
+    transform: translateY(0);
+    filter: drop-shadow(0 4px 8px rgba(26, 58, 107, 0.15));
+  }
+
+  50% {
+    transform: translateY(-10px);
+    filter: drop-shadow(0 14px 20px rgba(26, 58, 107, 0.22));
+  }
 }
 
 .success-title {
@@ -722,6 +842,8 @@ body {
   background: var(--color-surface);
   border-top: 1px solid var(--color-border);
   padding: 20px 24px;
+  position: relative;
+  z-index: 1;
 }
 
 .footer-inner {
@@ -756,6 +878,437 @@ body {
 }
 
 /* ============================================
+   DASHBOARD
+   ============================================ */
+.dashboard-welcome-block {
+  margin-bottom: 28px;
+}
+
+.dashboard-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 6px;
+}
+
+.dashboard-name {
+  color: var(--color-accent);
+}
+
+/* ─── Tarjeta de cuenta ─── */
+.dashboard-account-card {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 32px rgba(var(--color-primary-rgb), 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: transform var(--transition-spring), box-shadow var(--transition-spring);
+  will-change: transform;
+}
+
+.dashboard-account-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(var(--color-primary-rgb), 0.38);
+}
+
+.dashboard-account-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dashboard-bank-logo {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dashboard-account-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  opacity: 0.75;
+  margin-bottom: 4px;
+}
+
+.dashboard-account-number {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+  font-weight: 400;
+}
+
+/* ─── Chip de estado de cuenta ─── */
+.dashboard-account-chip {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-full);
+  padding: 4px 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition-spring);
+  user-select: none;
+}
+
+.dashboard-account-chip:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.04);
+}
+
+/* Chip inactiva */
+.dashboard-account-chip.inactive {
+  background: rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.dashboard-chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ADE80;
+  animation: dotPulse 2s ease-in-out infinite;
+  transition: background var(--transition);
+}
+
+.dashboard-account-chip.inactive .dashboard-chip-dot {
+  background: #94A3B8;
+  animation: none;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
+}
+
+/* ─── Toggle de estado ─── */
+.dashboard-status-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.toggle-track {
+  width: 40px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: #4ADE80;
+  position: relative;
+  cursor: pointer;
+  transition: background 300ms ease;
+  border: none;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.toggle-track.inactive {
+  background: #64748B;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toggle-track.inactive .toggle-thumb {
+  transform: translateX(0px);
+}
+
+.toggle-track:not(.inactive) .toggle-thumb {
+  transform: translateX(18px);
+}
+
+/* Meta-información inferior de la tarjeta */
+.dashboard-account-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.dashboard-meta-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin-bottom: 4px;
+}
+
+.dashboard-meta-value {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* ─── Tarjeta resumen de datos ─── */
+.dashboard-summary-card {
+  /* hereda .form-card */
+}
+
+.dashboard-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 4px;
+  padding-bottom: 16px;
+  border-bottom: 1.5px solid var(--color-border);
+}
+
+/* Grid de datos */
+.dashboard-data-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.dashboard-data-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+  padding-right: 24px;
+}
+
+.dashboard-data-item:nth-child(even) {
+  padding-left: 24px;
+  padding-right: 0;
+  border-left: 1px solid var(--color-border);
+}
+
+.dashboard-data-item:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+.dashboard-data-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* ─── REQ 4: Valor editable de dato ─── */
+.dashboard-data-value-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.dashboard-data-value {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+  flex: 1;
+}
+
+/* ─── REQ 4: Formulario de edición inline ─── */
+.dashboard-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+  animation: fadeSlideIn 300ms ease forwards;
+}
+
+.dashboard-edit-form .field-input,
+.dashboard-edit-form .field-select {
+  height: 40px;
+  font-size: 0.875rem;
+}
+
+.dashboard-edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-save {
+  height: 34px;
+  padding: 0 16px;
+  font-size: 0.8rem;
+  min-width: 0;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: background var(--transition), transform var(--transition-spring);
+}
+
+.btn-save:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+.btn-cancel-edit {
+  height: 34px;
+  padding: 0 14px;
+  font-size: 0.8rem;
+  min-width: 0;
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.btn-cancel-edit:hover {
+  background: var(--color-bg);
+  border-color: #A0ADC0;
+}
+
+/* ============================================
+   REQ 7: PANTALLA SESIÓN CERRADA
+   ============================================ */
+.session-closed-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 64px 40px;
+  gap: 20px;
+  animation: fadeSlideIn var(--transition-spring) forwards;
+}
+
+.session-closed-icon {
+  width: 72px;
+  height: 72px;
+  background: var(--color-surface);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-card);
+  animation: floatPulse 3s ease-in-out infinite;
+}
+
+.session-closed-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+}
+
+.session-closed-subtitle {
+  font-size: 0.9375rem;
+  color: var(--color-text-body);
+  max-width: 400px;
+  line-height: 1.7;
+}
+
+.session-closed-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+/* ============================================
+   REQ 7: MODAL LOGIN
+   ============================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(26, 44, 54, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: overlayFadeIn 200ms ease forwards;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-box {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: 40px 36px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: modalSlideUp var(--transition-spring) forwards;
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(32px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+}
+
+.modal-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-body);
+  margin-top: -8px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+/* ============================================
    RESPONSIVE — TABLET (≤ 900px)
    ============================================ */
 @media (max-width: 900px) {
@@ -767,6 +1320,11 @@ body {
   .stepper-sidebar {
     position: static;
     padding: 20px 20px;
+  }
+
+  .stepper-sidebar:hover {
+    transform: none;
+    box-shadow: var(--shadow-card);
   }
 
   .stepper-list {
@@ -812,6 +1370,10 @@ body {
     height: 2px;
     transform: none;
   }
+
+  .dashboard-account-meta {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* ============================================
@@ -824,6 +1386,10 @@ body {
 
   .form-card {
     padding: 20px 16px;
+  }
+
+  .form-card:hover {
+    transform: translateY(-3px);
   }
 
   .form-row {
@@ -872,5 +1438,57 @@ body {
 
   .success-screen {
     padding: 40px 20px;
+  }
+
+  .dashboard-account-card {
+    padding: 24px 20px;
+    border-radius: var(--radius-lg);
+  }
+
+  .dashboard-account-meta {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .dashboard-account-header {
+    flex-wrap: wrap;
+  }
+
+  .dashboard-data-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-data-item:nth-child(even) {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .dashboard-data-item:nth-last-child(-n+2) {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .dashboard-data-item:last-child {
+    border-bottom: none;
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+
+  .dashboard-account-card:hover {
+    transform: none;
+    box-shadow: 0 8px 32px rgba(var(--color-primary-rgb), 0.3);
+  }
+
+  .modal-box {
+    padding: 28px 20px;
+  }
+
+  .session-closed-actions {
+    flex-direction: column;
+  }
+
+  .session-closed-actions .btn {
+    width: 100%;
   }
 }
