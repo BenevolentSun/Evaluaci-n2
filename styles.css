@@ -71,18 +71,7 @@ body {
   flex-direction: column;
 }
 
-/* ============================================
-   REQ 6: ANTIGRAVITY CANVAS (background)
-   ============================================ */
-#antigravity-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
+
 
 /* ============================================
    HEADER
@@ -121,7 +110,8 @@ body {
 
 .header-nav {
   display: flex;
-  gap: 24px;
+  align-items: center;
+  gap: 20px;
 }
 
 .nav-link {
@@ -170,6 +160,126 @@ body {
   margin-top: 6px;
   font-size: 0.9375rem;
   color: var(--color-text-body);
+}
+
+/* ============================================
+   HEADER LOGIN BUTTON
+   ============================================ */
+
+/* Divisor visual entre links y botón */
+.header-nav-divider {
+  display: block;
+  width: 1px;
+  height: 20px;
+  background: var(--color-border);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+/* Botón CTA "Iniciar Sesión" en el header */
+.btn-header-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 18px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: 2px solid var(--color-primary);
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    transform var(--transition-spring),
+    box-shadow var(--transition-spring);
+}
+
+.btn-header-login:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(var(--color-primary-rgb), 0.30);
+}
+
+.btn-header-login:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(var(--color-primary-rgb), 0.20);
+}
+
+.btn-header-login:focus-visible {
+  outline: 3px solid rgba(var(--color-primary-rgb), 0.4);
+  outline-offset: 2px;
+}
+
+/* Chip de usuario autenticado en el header */
+.header-user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 14px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: rgba(var(--color-primary-rgb), 0.07);
+  color: var(--color-primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: 1.5px solid rgba(var(--color-primary-rgb), 0.15);
+  white-space: nowrap;
+  user-select: none;
+  letter-spacing: 0.01em;
+}
+
+.header-user-name {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Botón "Cerrar Sesión" en el header */
+.btn-header-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 16px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-error);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: 2px solid var(--color-error);
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    transform var(--transition-spring),
+    box-shadow var(--transition-spring);
+}
+
+.btn-header-logout:hover {
+  background: var(--color-error-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(201, 53, 31, 0.18);
+}
+
+.btn-header-logout:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-header-logout:focus-visible {
+  outline: 3px solid rgba(201, 53, 31, 0.3);
+  outline-offset: 2px;
 }
 
 /* ============================================
@@ -1070,9 +1180,7 @@ body {
 }
 
 /* ─── Tarjeta resumen de datos ─── */
-.dashboard-summary-card {
-  /* hereda .form-card */
-}
+/* .dashboard-summary-card hereda los estilos de .form-card */
 
 .dashboard-section-title {
   font-size: 1rem;
@@ -1491,4 +1599,86 @@ body {
   .session-closed-actions .btn {
     width: 100%;
   }
+}
+
+/* ============================================
+   PASSWORD FIELD STYLES (REQ 2)
+   ============================================ */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper .field-input {
+  padding-right: 44px;
+  width: 100%;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  transition: color var(--transition);
+  line-height: 0;
+}
+
+.password-toggle:hover {
+  color: var(--color-primary);
+}
+
+.password-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.password-strength-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-top: 6px;
+  height: 4px;
+}
+
+.strength-segment {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  transition: background 300ms ease;
+}
+
+/* .strength-segment.active — color aplicado por JS inline (seg.style.background) */
+
+/* ============================================
+   DASHBOARD BALANCE (REQ 3)
+   ============================================ */
+.dashboard-balance-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  margin: 0 -24px;
+}
+
+.dashboard-balance-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.dashboard-balance-amount {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: -0.01em;
 }
