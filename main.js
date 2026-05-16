@@ -1003,9 +1003,11 @@
   // ─── REQ 7: PANTALLA SESIóN CERRADA ──────────────────────────────────────
   function renderSessionClosed() {
     // Limpiar datos sensibles al cerrar sesión (principio de mínima exposición)
+    // NOTA: solo se borra el número de serie del documento.
+    // El bloque `seguridad` (passwordHash + passwordSalt) debe CONSERVARSE
+    // para que el usuario pueda volver a autenticarse en la misma sesión.
     var sessionData = loadFromLocalStorage();
     if (sessionData.identidad) delete sessionData.identidad.serie; // número de documento
-    delete sessionData.seguridad;  // hash + sal innecesarios fuera de sesión activa
     persistData(sessionData);
 
     setHeaderMode('form');
