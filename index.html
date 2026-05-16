@@ -4,21 +4,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Solicitud de Cuenta Bancaria — Banco G&N</title>
+  <!-- Seguridad del navegador -->
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self';" />
+  <title>Solicitud de Cuenta Bancaria — Banco G&amp;N</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap"
     rel="stylesheet" />
-  <!-- REQ 6: Matter.js CDN para el motor de físicas del fondo Antigravity -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
 
-  <!-- REQ 6: Canvas del motor de físicas Antigravity (siempre en background) -->
-  <canvas id="antigravity-canvas" aria-hidden="true"></canvas>
+
 
   <header class="site-header" role="banner">
     <div class="header-inner">
@@ -34,12 +37,23 @@
       <nav class="header-nav" aria-label="Navegación secundaria">
         <a href="#" class="nav-link">Ayuda</a>
         <a href="#" class="nav-link">Sucursales</a>
+        <span class="header-nav-divider" aria-hidden="true"></span>
+        <button type="button" class="btn-header-login" id="open-login-btn" aria-label="Iniciar sesión en tu cuenta">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true">
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8" />
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+          Iniciar Sesión
+        </button>
       </nav>
     </div>
   </header>
 
   <main class="main-content" role="main">
     <div class="page-wrapper">
+
+
 
       <!-- Título de la página -->
       <div class="page-title-block">
@@ -143,6 +157,7 @@
                   <label class="field-label" for="serie">
                     N° documento o serie
                     <button type="button" class="tooltip-trigger" aria-label="¿Qué es el número de serie?"
+                      data-tooltip-target="serie-tooltip"
                       data-tooltip="Número ubicado en el reverso de tu cédula de identidad.">
                       <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5" />
@@ -153,12 +168,39 @@
                   </label>
                   <div class="tooltip-box" id="serie-tooltip" role="tooltip">Número ubicado en el reverso de tu cédula
                     de identidad.</div>
-                  <input class="field-input" type="text" id="serie" name="serie" placeholder="9 dígitos"
-                    maxlength="9" inputmode="numeric" autocomplete="off" aria-required="true"
+                  <input class="field-input" type="text" id="serie" name="serie" placeholder="Ej: 123.456.789"
+                    maxlength="11" inputmode="numeric" autocomplete="off" aria-required="true"
                     aria-describedby="serie-error serie-hint" />
-                  <span class="field-hint" id="serie-hint">Solo dígitos numéricos. Ej: 123456789</span>
+                  <span class="field-hint" id="serie-hint">9 dígitos numéricos. El punto se inserta
+                    automáticamente.</span>
                   <span class="field-error" id="serie-error" role="alert" aria-live="assertive"></span>
                 </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label" for="password">Crea tu contraseña <span class="required-mark"
+                    aria-label="obligatorio">*</span></label>
+                <div class="password-wrapper">
+                  <input class="field-input" type="password" id="password" name="password"
+                    placeholder="Mínimo 8 caracteres, letras y números" autocomplete="new-password" aria-required="true"
+                    aria-describedby="password-error password-hint" />
+                  <button type="button" class="password-toggle" aria-label="Mostrar contraseña" tabindex="-1">
+                    <svg class="eye-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true">
+                      <path d="M1 10s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z" stroke="currentColor" stroke-width="1.5" />
+                      <circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="password-strength-bar" id="password-strength-bar" aria-hidden="true">
+                  <span class="strength-segment" id="ps-1"></span>
+                  <span class="strength-segment" id="ps-2"></span>
+                  <span class="strength-segment" id="ps-3"></span>
+                  <span class="strength-segment" id="ps-4"></span>
+                </div>
+                <span class="field-hint" id="password-hint">Mínimo 8 caracteres con letras y números.</span>
+                <span class="field-error" id="password-error" role="alert" aria-live="assertive"></span>
               </div>
             </div>
             <div class="step-actions">
@@ -180,14 +222,14 @@
                   <label class="field-label" for="nombres">Nombres <span class="required-mark"
                       aria-label="obligatorio">*</span></label>
                   <input class="field-input" type="text" id="nombres" name="nombres" placeholder="Tus nombres"
-                    autocomplete="given-name" aria-required="true" aria-describedby="nombres-error" />
+                    maxlength="60" autocomplete="given-name" aria-required="true" aria-describedby="nombres-error" />
                   <span class="field-error" id="nombres-error" role="alert" aria-live="assertive"></span>
                 </div>
                 <div class="form-field">
                   <label class="field-label" for="apellidos">Apellidos <span class="required-mark"
                       aria-label="obligatorio">*</span></label>
                   <input class="field-input" type="text" id="apellidos" name="apellidos" placeholder="Tus apellidos"
-                    autocomplete="family-name" aria-required="true" aria-describedby="apellidos-error" />
+                    maxlength="60" autocomplete="family-name" aria-required="true" aria-describedby="apellidos-error" />
                   <span class="field-error" id="apellidos-error" role="alert" aria-live="assertive"></span>
                 </div>
               </div>
@@ -263,8 +305,8 @@
                   <label class="field-label" for="comuna">Comuna <span class="required-mark"
                       aria-label="obligatorio">*</span></label>
                   <div class="select-wrapper">
-                    <select class="field-input field-select" id="comuna" name="comuna" disabled
-                      aria-required="true" aria-describedby="comuna-error">
+                    <select class="field-input field-select" id="comuna" name="comuna" disabled aria-required="true"
+                      aria-describedby="comuna-error">
                       <option value="">Selecciona tu región primero</option>
                     </select>
                     <svg class="select-arrow" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -281,14 +323,14 @@
                   <label class="field-label" for="calle">Calle <span class="required-mark"
                       aria-label="obligatorio">*</span></label>
                   <input class="field-input" type="text" id="calle" name="calle" placeholder="Nombre de la calle"
-                    autocomplete="street-address" aria-required="true" aria-describedby="calle-error" />
+                    maxlength="100" autocomplete="street-address" aria-required="true" aria-describedby="calle-error" />
                   <span class="field-error" id="calle-error" role="alert" aria-live="assertive"></span>
                 </div>
                 <div class="form-field form-field--shrink">
                   <label class="field-label" for="numero">Número <span class="required-mark"
                       aria-label="obligatorio">*</span></label>
-                  <input class="field-input" type="text" id="numero" name="numero" placeholder="N°" aria-required="true"
-                    aria-describedby="numero-error" />
+                  <input class="field-input" type="text" id="numero" name="numero" placeholder="N°" maxlength="10"
+                    aria-required="true" aria-describedby="numero-error" />
                   <span class="field-error" id="numero-error" role="alert" aria-live="assertive"></span>
                 </div>
               </div>
@@ -313,7 +355,7 @@
                   <label class="field-label" for="email">Correo electrónico <span class="required-mark"
                       aria-label="obligatorio">*</span></label>
                   <input class="field-input" type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com"
-                    autocomplete="email" aria-required="true" aria-describedby="email-error" />
+                    maxlength="254" autocomplete="email" aria-required="true" aria-describedby="email-error" />
                   <span class="field-error" id="email-error" role="alert" aria-live="assertive"></span>
                 </div>
                 <div class="form-field">
@@ -347,9 +389,8 @@
               </svg>
             </div>
             <h2 class="success-title">¡Solicitud enviada correctamente!</h2>
-            <p class="success-message">Hemos recibido tus datos. En las próximas horas recibirás un correo de
-              confirmación con los pasos a seguir para activar tu Cuenta Bancaria.</p>
-            <button type="button" class="btn btn-primary" id="login-btn">Ir a mi Dashboard</button>
+            <p class="success-message">Su cuenta a sido creada correctamente, a continuación podrá iniciar sesión.</p>
+            <button type="button" class="btn btn-primary" id="login-btn">Ir a mi Banco</button>
           </div>
 
         </section>
@@ -379,12 +420,28 @@
         </span>
         <h2 class="modal-title" id="modal-title">Iniciar Sesión</h2>
       </div>
-      <p class="modal-subtitle">Ingresa tu RUT para acceder a tu cuenta.</p>
+      <p class="modal-subtitle">Ingresa tu RUT y contraseña para acceder a tu cuenta.</p>
       <div class="form-field">
-        <label class="field-label" for="login-rut">RUT <span class="required-mark" aria-label="obligatorio">*</span></label>
-        <input class="field-input" type="text" id="login-rut" placeholder="Ej: 12.345.678-9"
-          maxlength="12" autocomplete="off" aria-describedby="login-rut-error" />
+        <label class="field-label" for="login-rut">RUT <span class="required-mark"
+            aria-label="obligatorio">*</span></label>
+        <input class="field-input" type="text" id="login-rut" placeholder="Ej: 12.345.678-9" maxlength="12"
+          autocomplete="username" aria-required="true" aria-describedby="login-rut-error" />
         <span class="field-error" id="login-rut-error" role="alert" aria-live="assertive"></span>
+      </div>
+      <div class="form-field">
+        <label class="field-label" for="login-password">Contraseña <span class="required-mark"
+            aria-label="obligatorio">*</span></label>
+        <div class="password-wrapper">
+          <input class="field-input" type="password" id="login-password" placeholder="Tu contraseña"
+            autocomplete="current-password" aria-describedby="login-password-error" />
+          <button type="button" class="password-toggle" aria-label="Mostrar contraseña" tabindex="-1">
+            <svg class="eye-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M1 10s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z" stroke="currentColor" stroke-width="1.5" />
+              <circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+          </button>
+        </div>
+        <span class="field-error" id="login-password-error" role="alert" aria-live="assertive"></span>
       </div>
       <div class="modal-actions">
         <button type="button" class="btn btn-secondary" id="modal-cancel-btn">Cancelar</button>
